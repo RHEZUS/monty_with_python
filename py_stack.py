@@ -129,30 +129,163 @@ class DoublyLinkedList:
         self.head = head.next_node
         head = None
 
-    def swap():
-        pass
-    def add():
-        pass
-    def nop():
-        pass
-    def sub():
-        pass
-    def div():
-        pass
-    def mul():
-        pass
-    def mod():
-        pass
-    def pchar():
-        pass
-    def pstr():
-        pass
+    def swap(self, command, line_number):
+        current = self.head
+        length = 0
+        data = 0
+        while (current != None):
+            length += 1
+            current = current.next_node
+        if length < 2:
+            print("L{}: can't swap, stack too short".format(line_number))
+            sys.exit(1)
+        data = self.head.data
+        self.head.data = self.head.next_node.data
+        self.head.next_node.data = data
 
-def stack():
-    global is_stack
-    is_stack = True
+    def add(self, command, line_number):
+        result = 0
+        current = self.head
+        length = 0
+        while (current != None):
+            length += 1
+            current = current.next_node
+            #print(length)
+        if length < 2:
+            print("L{}: can't swap, stack too short".format(line_number))
+            sys.exit(1)
+        #print("Add")
+        result = self.head.data + self.head.next_node.data
+        self.head.next_node.data = result
+        
+        head = self.head
+        self.head = head.next_node
+        head = None
+        
+    def nop(self, command, line_number):
+        pass
+    def sub(self, command, line_number):
+        result = 0
+        current = self.head
+        length = 0
+        while (current != None):
+            length += 1
+            current = current.next_node
+        if length < 2:
+            print("L{}: can't swap, stack too short".format(line_number))
+            sys.exit(1)
+        #print("Add")
+        result = self.head.next_node.data - self.head.data
+        self.head.next_node.data = result
 
-def queue():
-    global is_stack
-    is_stack = False
+        head = self.head
+        self.head = head.next_node
+        head = None
+    def div(self, command, line_number):
+        result = 0
+        current = self.head
+        length = 0
+        while (current != None):
+            length += 1
+            current = current.next_node
+        if length < 2:
+            print("L{}: can't swap, stack too short".format(line_number))
+            sys.exit(1)
+        #print("Add")
+        result = self.head.next_node.data // self.head.data
+        self.head.next_node.data = result
+
+        head = self.head
+        self.head = head.next_node
+        head = None
+    def mul(self, command, line_number):
+        result = 0
+        current = self.head
+        length = 0
+        while (current != None):
+            length += 1
+            current = current.next_node
+        if length < 2:
+            print("L{}: can't swap, stack too short".format(line_number))
+            sys.exit(1)
+        #print("Add")
+        result = self.head.next_node.data * self.head.data
+        self.head.next_node.data = result
+
+        head = self.head
+        self.head = head.next_node
+        head = None
+    def mod(self, command, line_number):
+        result = 0
+        current = self.head
+        length = 0
+        while (current != None):
+            length += 1
+            current = current.next_node
+        if length < 2:
+            print("L{}: can't swap, stack too short".format(line_number))
+            sys.exit(1)
+        #print("Add")
+        result = self.head.next_node.data % self.head.data
+        self.head.next_node.data = result
+
+        head = self.head
+        self.head = head.next_node
+        head = None
+    
+
+    def pchar(self, command, line_number):
+        head = self.head
+        if head is None:
+            print("L{}: can't pchar, stack empty".format(line_number))
+            sys.exit(1)
+        if head.data < 0 or head.data > 127:
+            print("L{}: can't pchar, value out of range".format(line_number))
+            sys.exit(1)
+        print("{}".format(chr(head.data)))
+
+    def pstr(self, command, line_number):
+        head = self.head
+        if head is None:
+            print()
+        while head is not None:
+            if head.data <= 0 or head.data > 127:
+                break
+            else:
+                print("{}".format(chr(head.data)), end="")
+            head = head.next_node
+        print()
+
+    def rotl(self, command, line_number):
+        if self.head is None or self.head.next_node is None:
+            return
+        head = self.head.next_node
+        head.prev_node = None
+        tmp  = self.head
+        while tmp.next_node is not None:
+            tmp = tmp.next_node
+        tmp.next_node = self.head
+        self.head.next_node = None
+        self.head.prev_node = tmp
+        self.head = head
+    
+    def  rotr(self, command, line_number):
+        if self.head is None or self.head.next_node is None:
+            return
+        copy = self.head
+        while copy.next_node is not None:
+            copy = copy.next_node
+        copy.next_node = self.head
+        copy.prev_node.next_node = None
+        copy.prev_node = None
+        self.head.prev_node = copy
+        self.head = copy
+
+    def stack(self, command, line_number):
+        global is_stack
+        is_stack = True
+
+    def queue(self, command, line_number):
+        global is_stack
+        is_stack = False
 
